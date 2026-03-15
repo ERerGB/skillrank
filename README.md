@@ -1,37 +1,31 @@
 # SkillRank
 
-面向自媒体创作者的 **Skill 发现与排名服务**。
+A PageRank-inspired ranking engine for AI Agent Skill Hubs.
 
 ## Concept
 
-自媒体创作者通过 IM Agent（WhatsApp / Telegram / 微信等）调用 AI 能力模块（Skill），
-完成图文筛选、信息搜索、内容编排与多平台发布。SkillRank 帮助创作者发现最适合其 IP 定位
-的 Skill，同时作为 [Prism](https://github.com/ERerGB/prism) 知识图谱引擎的
-Scout Worker 上游数据源。
+The AI agent skill ecosystem is fragmented across many hubs — ClawHub, SkillKit Marketplace, Cursor Marketplace, and more. SkillRank treats **Hubs as Domains** and computes quality scores using PageRank-like algorithms, helping consumers discover which hubs are most reliable and well-maintained.
 
-**核心模型**: Hub 是 Domain（排名节点），Skill 是 Metadata。排名基础设施，不排名内容。
+**Key insight**: Skills are ephemeral metadata. Hubs are durable infrastructure. Rank the infrastructure, not the content.
+
+SkillRank is a pure infrastructure service — no UI, no business logic. Downstream consumers (e.g. [SkillNet](https://github.com/ERerGB/skillnet), Prism Scout) query its API.
 
 ## Architecture
 
 ```
-SkillRank (CF Worker)              Prism (知识图谱引擎)
-├── Registry  — Hub 定义 + SDK      ┌──────────────────┐
-├── Crawler   — 定时 SDK 调用       │ Scout Worker     │
-├── Ranker    — 多维排名            │  查询 SkillRank  │
-├── D1/PG     — 存储               │  决定收录策略    │
-└── API       — /rank /discover     └──────────────────┘
-               /recommend /search
+CF Worker (SkillRank Engine)
+├── Registry   — Hub definitions + SDK adapters
+├── Crawler    — Scheduled fetch via hub SDKs (not API scraping)
+├── Ranker     — PageRank scoring from hub graph signals
+├── D1/Postgres — Hub snapshots + rank history
+└── API        — /rank, /hubs, /search endpoints
 ```
-
-## V1 Target Platforms
-
-图文内容优先：小红书 · 微信公众号 · X · Instagram · Threads
 
 ## Status
 
 **Scaffolding phase** — engineering governance established, implementation pending.
 
-See [ADR-001](doc/adr/001-hub-as-domain-pagerank-model.md) for architecture decisions.
+See [ADR-001](doc/adr/001-hub-as-domain-pagerank-model.md) for the foundational architecture decision.
 
 ## Development
 
