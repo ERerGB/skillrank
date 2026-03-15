@@ -9,7 +9,12 @@ The engine aggregates, scores, and ranks hubs — not individual skills.
 
 SkillRank is a pure infrastructure service. It does NOT contain business logic,
 UI, or platform-specific content. Those belong in downstream consumers
-(e.g. SkillNet, Prism Scout).
+(e.g. Skillet, Prism Scout).
+
+**Bidirectional feedback**: SkillRank receives semantic signals from Prism
+(citation density, contributor reputation, content quality) via `POST /signal`.
+V1 stores signals without using them in ranking; V2 integrates them into PageRank.
+@see [Skillet ADR-002](https://github.com/ERerGB/skillet/blob/main/doc/adr/002-bidirectional-feedback-contract.md)
 
 ## Mandatory Rules
 
@@ -40,6 +45,7 @@ UI, or platform-specific content. Those belong in downstream consumers
 │  │ Railway  │                  │ /rank   │           │
 │  └──────────┘                  │ /hubs   │           │
 │                                │ /search │           │
+│                                │ /signal │ ← Prism   │
 │                                └─────────┘           │
 └──────────────────────────────────────────────────────┘
 ```
