@@ -3,6 +3,8 @@
 Status: Proposed
 Date: 2026-02-28
 
+> Discussion: [discussion log](002-d1-schema-design.discussion.md)
+
 ## Context
 
 SkillRank needs persistent storage for hub registry, crawled skill metadata,

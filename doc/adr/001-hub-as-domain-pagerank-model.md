@@ -3,6 +3,8 @@
 Status: Proposed
 Date: 2026-02-28
 
+> Discussion: [discussion log](001-hub-as-domain-pagerank-model.discussion.md)
+
 ## Context
 
 The AI agent skill ecosystem is fragmented across multiple hubs (ClawHub,
